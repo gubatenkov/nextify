@@ -1,0 +1,37 @@
+import React from 'react'
+
+import {
+  IListIconItemProps,
+  IListItemIcon,
+  ISidebarData,
+} from '../../interfaces'
+import { ListItemIcon, Logo } from '../'
+import data from '../../data/sidebarData'
+
+export default function Sidebar() {
+  return (
+    <aside className="sidebar h-screen min-w-[240px] p-6">
+      <Logo className="mb-2 max-w-[130px] text-white" />
+      <ul className="menu">{renderMenuWithSubMenus(data, ListItemIcon)}</ul>
+    </aside>
+  )
+}
+
+function renderMenuWithSubMenus(
+  data: ISidebarData,
+  Component: React.FC<IListIconItemProps>
+) {
+  const submenus = Object.values(data)
+  return submenus.map((submenu: IListItemIcon[], idx) => (
+    <ul
+      className="submenu border-b-[1px] border-gray-900 pt-4 text-gray-400"
+      key={idx}
+    >
+      {submenu.map((subitem: IListItemIcon) => (
+        <Component key={subitem.id} {...subitem}>
+          {subitem.text}
+        </Component>
+      ))}
+    </ul>
+  ))
+}
