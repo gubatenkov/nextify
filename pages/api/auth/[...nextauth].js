@@ -1,6 +1,6 @@
 import NextAuth from 'next-auth'
 import DefaultProvider from 'next-auth/providers/spotify'
-import { LOGIN_URL, spotApi } from '../../../utils/spotify'
+import { LOGIN_URL, spotApi } from '../../../services/spotify'
 
 const providerData = {
   clientId: process.env.NEXT_PUBLIC_CLIENT_ID || '',

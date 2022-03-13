@@ -4,15 +4,22 @@ import {
   IListIconItemProps,
   IListItemIcon,
   ISidebarData,
+  Playlist,
 } from '../../interfaces'
-import { ListItemIcon, Logo } from '../'
+import { ListItemIcon, Logo, PlaylistItem } from '../'
 import data from '../../data/sidebarData'
+import { renderItems } from '../../utils/helperFunctions'
 
-export default function Sidebar() {
+interface ISidebarProps {
+  readonly playlists: Playlist[]
+}
+
+export default function Sidebar({ playlists }: ISidebarProps) {
   return (
-    <aside className="sidebar h-screen min-w-[240px] p-6">
+    <aside className="sidebar h-screen min-w-[240px] max-w-[270px] p-6">
       <Logo className="mb-2 max-w-[130px] text-white" />
       <ul className="menu">{renderMenuWithSubMenus(data, ListItemIcon)}</ul>
+      <ul className="playlists pt-4">{renderItems(playlists, PlaylistItem)}</ul>
     </aside>
   )
 }
