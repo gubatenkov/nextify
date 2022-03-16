@@ -20,8 +20,8 @@ interface ILoginProps {
 }
 
 const Login: NextPage<ILoginProps> = ({ providers }) => {
-  const { data: session, status } = useSession()
-  console.log(session)
+  // const { data: session, status } = useSession()
+  console.log(providers)
 
   const [isUserLoading, setUserLoading] = useState(false)
 

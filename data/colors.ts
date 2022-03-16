@@ -1,4 +1,4 @@
-export default [
+export const colors = [
   'from-indigo-500',
   'from-blue-500',
   'from-green-500',

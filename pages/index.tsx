@@ -4,7 +4,7 @@ import { useMemo, useEffect } from 'react'
 import { useSession } from 'next-auth/react'
 import { useDispatch, useSelector } from 'react-redux'
 
-import colors from '../data/colors'
+import { colors } from '../data/colors'
 import { setUser } from '../slices/userSlice'
 import { setPlaylists } from '../slices/playlistsSlice'
 import { Sidebar, SongList, Topbar } from '../components'
@@ -13,7 +13,7 @@ import { TRootState, TAppDispatch } from '../interfacesAndTypes'
 
 const Home: NextPage = () => {
   // const dispatch = useDispatch<TAppDispatch>()
-  const { data: session, status } = useSession()
+  // const { data: session, status } = useSession()
   // const playlists = useSelector(({ playlists }: TRootState) => playlists)
   // const [trigger, { data, isSuccess, isUninitialized }, lastPromiseInfo] =
   //   useLazyGetAllPlaylistsQuery()
@@ -21,7 +21,7 @@ const Home: NextPage = () => {
   //   () => colors[Math.floor(Math.random() * colors.length)],
   //   [colors.length]
   // )
-  console.log(session, status)
+  // console.log(session, status)
 
   // set playlists to the global state
   // useEffect(() => {
