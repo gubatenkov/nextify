@@ -11,9 +11,9 @@ function MyApp({ Component, pageProps: { session, ...pageProps } }: AppProps) {
   return (
     <SessionProvider session={session}>
       <Provider store={store}>
-        <PersistGate loading={null} persistor={persistor}>
-          <Component {...pageProps} />
-        </PersistGate>
+        {/* <PersistGate loading={null} persistor={persistor}> */}
+        <Component {...pageProps} />
+        {/* </PersistGate> */}
       </Provider>
     </SessionProvider>
   )
