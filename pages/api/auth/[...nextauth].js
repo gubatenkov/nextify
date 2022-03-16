@@ -66,8 +66,5 @@ export default NextAuth({
 
       return session
     },
-    async signIn({ user }) {
-      return user
-    },
   },
 })
