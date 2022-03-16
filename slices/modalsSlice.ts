@@ -9,7 +9,7 @@ const initialState: InitState = {
 }
 
 const slice = createSlice({
-  name: 'default',
+  name: 'modals',
   initialState,
   reducers: {
     openUserWidgetModal: (state: InitState) => {

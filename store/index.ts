@@ -13,11 +13,11 @@ import storage from 'redux-persist/lib/storage'
 import { playlistsApi } from '../api/playlistsApi'
 import { modalsReducer, userReducer, playlistsReducer } from '../slices'
 
-const persistConfig = {
-  key: 'root',
-  version: 1,
-  storage,
-}
+// const persistConfig = {
+//   key: 'root',
+//   version: 1,
+//   storage,
+// }
 
 const rootReducer = combineReducers({
   [playlistsApi.reducerPath]: playlistsApi.reducer,
@@ -25,7 +25,7 @@ const rootReducer = combineReducers({
   playlists: playlistsReducer,
   modals: modalsReducer,
 })
-const persistedReducer = persistReducer(persistConfig, rootReducer)
+// const persistedReducer = persistReducer(persistConfig, rootReducer)
 
 const store = configureStore({
   reducer: {
@@ -42,5 +42,5 @@ const store = configureStore({
   //   }),
 })
 
-export let persistor = persistStore(store)
+// export let persistor = persistStore(store)
 export default store
