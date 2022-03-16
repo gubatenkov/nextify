@@ -12,16 +12,16 @@ import { useLazyGetAllPlaylistsQuery } from '../api/playlistsApi'
 import { TRootState, TAppDispatch } from '../interfacesAndTypes'
 
 const Home: NextPage = () => {
-  const dispatch = useDispatch<TAppDispatch>()
+  // const dispatch = useDispatch<TAppDispatch>()
   const { data: session, status } = useSession()
   // const playlists = useSelector(({ playlists }: TRootState) => playlists)
   // const [trigger, { data, isSuccess, isUninitialized }, lastPromiseInfo] =
   //   useLazyGetAllPlaylistsQuery()
-  const randomBgColor = useMemo(
-    () => colors[Math.floor(Math.random() * colors.length)],
-    [colors.length]
-  )
-  console.log(session)
+  // const randomBgColor = useMemo(
+  //   () => colors[Math.floor(Math.random() * colors.length)],
+  //   [colors.length]
+  // )
+  console.log(session, status)
 
   // set playlists to the global state
   // useEffect(() => {
@@ -46,12 +46,12 @@ const Home: NextPage = () => {
       </Head>
       <main className="main flex">
         <Sidebar playlists={[]} />
-        <div
+        {/* <div
           className={`content flex-grow bg-gradient-to-b ${randomBgColor} via-black to-black`}
         >
           <Topbar />
           <SongList />
-        </div>
+        </div> */}
       </main>
     </div>
   )
