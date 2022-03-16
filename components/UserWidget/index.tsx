@@ -38,7 +38,7 @@ export default function UserWidget({ name, image, email }: IUserWidgetProps) {
           alt="user"
         />
         <p className="pointer-events-none mx-3 hidden text-white sm:block">
-          {name}
+          {name || 'User'}
         </p>
         <ChevronDownIcon
           className={`${

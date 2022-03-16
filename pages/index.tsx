@@ -14,9 +14,9 @@ import { TRootState, TAppDispatch } from '../interfacesAndTypes'
 const Home: NextPage = () => {
   const dispatch = useDispatch<TAppDispatch>()
   const { data: session, status } = useSession()
-  const playlists = useSelector(({ playlists }: TRootState) => playlists)
-  const [trigger, { data, isSuccess, isUninitialized }, lastPromiseInfo] =
-    useLazyGetAllPlaylistsQuery()
+  // const playlists = useSelector(({ playlists }: TRootState) => playlists)
+  // const [trigger, { data, isSuccess, isUninitialized }, lastPromiseInfo] =
+  //   useLazyGetAllPlaylistsQuery()
   const randomBgColor = useMemo(
     () => colors[Math.floor(Math.random() * colors.length)],
     [colors.length]
@@ -24,19 +24,19 @@ const Home: NextPage = () => {
   console.log(session)
 
   // set playlists to the global state
-  useEffect(() => {
-    if (!isUninitialized && isSuccess) {
-      dispatch(setPlaylists(data?.items))
-    }
-  }, [isSuccess, data])
+  // useEffect(() => {
+  //   if (!isUninitialized && isSuccess) {
+  //     dispatch(setPlaylists(data?.items))
+  //   }
+  // }, [isSuccess, data])
 
   // set user to the global state after success auth
-  useEffect(() => {
-    if (session) {
-      dispatch(setUser(session.user))
-      trigger(session.user.accessToken)
-    }
-  }, [session])
+  // useEffect(() => {
+  //   if (session) {
+  //     dispatch(setUser(session.user))
+  //     trigger(session.user.accessToken)
+  //   }
+  // }, [session])
 
   return (
     <div className="app h-screen overflow-hidden bg-black">
@@ -45,7 +45,7 @@ const Home: NextPage = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main className="main flex">
-        <Sidebar playlists={playlists} />
+        <Sidebar playlists={[]} />
         <div
           className={`content flex-grow bg-gradient-to-b ${randomBgColor} via-black to-black`}
         >
