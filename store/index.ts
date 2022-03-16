@@ -28,13 +28,18 @@ const rootReducer = combineReducers({
 const persistedReducer = persistReducer(persistConfig, rootReducer)
 
 const store = configureStore({
-  reducer: persistedReducer,
-  middleware: (getDefaultMiddleware) =>
-    getDefaultMiddleware({
-      serializableCheck: {
-        ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
-      },
-    }),
+  reducer: {
+    [playlistsApi.reducerPath]: playlistsApi.reducer,
+    user: userReducer,
+    playlists: playlistsReducer,
+    modals: modalsReducer,
+  },
+  // middleware: (getDefaultMiddleware) =>
+  //   getDefaultMiddleware({
+  //     serializableCheck: {
+  //       ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
+  //     },
+  //   }),
 })
 
 export let persistor = persistStore(store)
