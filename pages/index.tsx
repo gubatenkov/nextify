@@ -21,6 +21,7 @@ const Home: NextPage = () => {
     () => colors[Math.floor(Math.random() * colors.length)],
     [colors.length]
   )
+  console.log(session)
 
   // set playlists to the global state
   useEffect(() => {
