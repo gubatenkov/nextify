@@ -11,7 +11,6 @@ const refreshAccessToken = async (token) => {
   try {
     spotApi.setAccessToken(token.accessToken)
     spotApi.setRefreshToken(token.refreshToken)
-
     const { body: refreshedToken } = await spotApi.refreshAccessToken()
 
     return {
@@ -66,6 +65,9 @@ export default NextAuth({
       session.error = token.error
 
       return session
+    },
+    async signIn({ user }) {
+      return user
     },
   },
 })

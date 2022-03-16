@@ -1,48 +1,41 @@
 import Head from 'next/head'
-import { shuffle } from 'lodash'
 import type { NextPage } from 'next'
-import { useEffect, useState } from 'react'
+import { useMemo, useEffect } from 'react'
 import { useSession } from 'next-auth/react'
+import { useDispatch, useSelector } from 'react-redux'
 
-import useSpotify from '../hooks/useSpotify'
-import { Sidebar, SongList, Userbar } from '../components'
-
-const colors = [
-  'from-indigo-500',
-  'from-blue-500',
-  'from-green-500',
-  'from-pink-500',
-  'from-yellow-500',
-  'from-purple-500',
-  'from-red-500',
-]
+import colors from '../data/colors'
+import { setUser } from '../slices/userSlice'
+import { setPlaylists } from '../slices/playlistsSlice'
+import { Sidebar, SongList, Topbar } from '../components'
+import { useLazyGetAllPlaylistsQuery } from '../api/playlistsApi'
+import { TRootState, TAppDispatch } from '../interfacesAndTypes'
 
 const Home: NextPage = () => {
-  const api = useSpotify()
+  const dispatch = useDispatch<TAppDispatch>()
   const { data: session, status } = useSession()
-  const [color, setColor] = useState<string | undefined>(undefined)
-  const [playlists, setPlaylists] = useState([])
+  const playlists = useSelector(({ playlists }: TRootState) => playlists)
+  const [trigger, { data, isSuccess, isUninitialized }, lastPromiseInfo] =
+    useLazyGetAllPlaylistsQuery()
+  const randomBgColor = useMemo(
+    () => colors[Math.floor(Math.random() * colors.length)],
+    [colors.length]
+  )
 
-  // fetch user playlists from an api
+  // set playlists to the global state
   useEffect(() => {
-    const getPlaylists = async () => {
-      try {
-        const playlists = await api.getUserPlaylists()
-        setPlaylists(playlists.body.items)
-      } catch (err) {
-        console.log(err)
-      }
+    if (!isUninitialized && isSuccess) {
+      dispatch(setPlaylists(data?.items))
     }
+  }, [isSuccess, data])
 
-    if (api.getAccessToken()) {
-      getPlaylists()
-    }
-  }, [session, api])
-
-  // set SongList bg-color to picked one from an array
+  // set user to the global state after success auth
   useEffect(() => {
-    setColor(shuffle(colors).pop())
-  }, [])
+    if (session) {
+      dispatch(setUser(session.user))
+      trigger(session.user.accessToken)
+    }
+  }, [session])
 
   return (
     <div className="app h-screen overflow-hidden bg-black">
@@ -53,9 +46,9 @@ const Home: NextPage = () => {
       <main className="main flex">
         <Sidebar playlists={playlists} />
         <div
-          className={`content flex-grow bg-gradient-to-b ${color} via-black to-black`}
+          className={`content flex-grow bg-gradient-to-b ${randomBgColor} via-black to-black`}
         >
-          <Userbar />
+          <Topbar />
           <SongList />
         </div>
       </main>

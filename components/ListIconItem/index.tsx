@@ -1,5 +1,5 @@
 import React from 'react'
-import { IListIconItemProps } from '../../interfaces/'
+import { IListIconItemProps } from '../../interfacesAndTypes'
 
 export default function ListIconItem({
   icon: Icon,

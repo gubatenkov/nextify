@@ -6,11 +6,11 @@ import {
   signIn,
   useSession,
 } from 'next-auth/react'
+import { NextPage } from 'next'
 import { BuiltInProviderType } from 'next-auth/providers'
 
-import logo from '../assets/images/spotify.svg'
-import { NextPage } from 'next'
 import { Spinner } from '../components'
+import logo from '../assets/images/spotify.svg'
 
 interface ILoginProps {
   readonly providers: Record<
@@ -23,17 +23,13 @@ const Login: NextPage<ILoginProps> = ({ providers }) => {
   const { data: session, status } = useSession()
   const [isUserLoading, setUserLoading] = useState(false)
 
-  const onClickSignIn = (providerId: string) => {
+  const handleClick = (providerId: string) => {
     setUserLoading(true)
     signIn(providerId, { callbackUrl: '/' })
   }
 
   useEffect(() => {
-    if (status === 'loading') {
-      setUserLoading(true)
-    } else {
-      setUserLoading(false)
-    }
+    status === 'loading' ? setUserLoading(true) : setUserLoading(false)
   }, [status])
 
   return (
@@ -49,7 +45,7 @@ const Login: NextPage<ILoginProps> = ({ providers }) => {
           <button
             className="max-w-[250px] rounded-full bg-gradient-to-r from-blue-400 px-5 py-2 text-white transition delay-150 ease-in-out hover:from-blue-400 hover:to-blue-400"
             key={provider.name}
-            onClick={() => onClickSignIn(provider.id)}
+            onClick={() => handleClick(provider.id)}
           >
             {isUserLoading ? (
               <Spinner>Processing...</Spinner>
@@ -63,7 +59,14 @@ const Login: NextPage<ILoginProps> = ({ providers }) => {
   )
 }
 
-export async function getServerSideProps() {
+export async function getServerSideProps(): Promise<{
+  props: {
+    providers: Record<
+      LiteralUnion<BuiltInProviderType, string>,
+      ClientSafeProvider
+    > | null
+  }
+}> {
   const providers = await getProviders()
   return {
     props: {
