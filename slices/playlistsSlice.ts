@@ -15,9 +15,10 @@ const slice = createSlice({
   initialState,
   reducers: {
     setPlaylists: (state: IState, { payload }: ISetPlaylistsAction) => payload,
+    clearPlaylists: (state: IState) => [],
   },
 })
 
-export const { setPlaylists } = slice.actions
+export const { setPlaylists, clearPlaylists } = slice.actions
 
 export default slice.reducer

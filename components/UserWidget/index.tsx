@@ -1,7 +1,6 @@
-import { signOut } from 'next-auth/react'
+import React, { useRef } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { ChevronDownIcon } from '@heroicons/react/outline'
-import React, { useRef, useEffect, RefObject } from 'react'
 
 import {
   openUserWidgetModal,
@@ -12,7 +11,7 @@ import {
   TRootState,
   TAppDispatch,
 } from '../../interfacesAndTypes'
-import { clearUser } from '../../slices/userSlice'
+import UserWidgetModal from './UserWidgetModal'
 
 export default function UserWidget({ name, image, email }: IUserWidgetProps) {
   const ref = useRef<HTMLButtonElement>(null)
@@ -49,51 +48,6 @@ export default function UserWidget({ name, image, email }: IUserWidgetProps) {
       {userWidgetModal && (
         <UserWidgetModal closeModal={closeModal} openElRef={ref} />
       )}
-    </div>
-  )
-}
-
-function UserWidgetModal({
-  closeModal,
-  openElRef,
-}: {
-  closeModal: (value: React.SetStateAction<void>) => void
-  openElRef: RefObject<HTMLButtonElement>
-}) {
-  const dispatch = useDispatch<TAppDispatch>()
-  useEffect(() => {
-    // define listener func
-    const listener = (e: MouseEvent): void => {
-      const clickedEl = e.target
-      if (clickedEl !== openElRef?.current) {
-        closeModal()
-      }
-    }
-    // add listener on mount
-    document.addEventListener('click', listener)
-    // remove on unmount
-    return () => document.removeEventListener('click', listener, false)
-  }, [])
-
-  const handleClick = () => {
-    // clear user in global state
-    dispatch(clearUser())
-    // end session
-    signOut()
-  }
-
-  return (
-    <div className="absolute top-[40px] right-0 w-[190px] rounded-[4px] bg-[#282828] p-[4px] text-sm">
-      <ul className="m-0 p-0">
-        <li className="rounded-[3px] p-[12px] hover:bg-white/10">Account</li>
-        <li className="rounded-[3px] p-[12px] hover:bg-white/10">Profile</li>
-        <li
-          className="rounded-[3px] p-[12px] hover:bg-white/10"
-          onClick={handleClick}
-        >
-          Log out
-        </li>
-      </ul>
     </div>
   )
 }

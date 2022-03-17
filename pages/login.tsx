@@ -20,19 +20,17 @@ interface ILoginProps {
 }
 
 const Login: NextPage<ILoginProps> = ({ providers }) => {
-  // const { data: session, status } = useSession()
-  console.log(providers)
-
+  const { data: session, status } = useSession()
   const [isUserLoading, setUserLoading] = useState(false)
 
-  // const handleClick = (providerId: string) => {
-  //   setUserLoading(true)
-  //   signIn(providerId, { callbackUrl: '/' })
-  // }
+  const handleClick = (providerId: string) => {
+    setUserLoading(true)
+    signIn(providerId, { callbackUrl: '/' })
+  }
 
-  // useEffect(() => {
-  //   status === 'loading' ? setUserLoading(true) : setUserLoading(false)
-  // }, [status])
+  useEffect(() => {
+    status === 'loading' ? setUserLoading(true) : setUserLoading(false)
+  }, [status])
 
   return (
     <div className="login flex h-screen flex-col items-center justify-center bg-black">
@@ -47,7 +45,7 @@ const Login: NextPage<ILoginProps> = ({ providers }) => {
           <button
             className="max-w-[250px] rounded-full bg-gradient-to-r from-blue-400 px-5 py-2 text-white transition delay-150 ease-in-out hover:from-blue-400 hover:to-blue-400"
             key={provider.name}
-            // onClick={() => handleClick(provider.id)}
+            onClick={() => handleClick(provider.id)}
           >
             {isUserLoading ? (
               <Spinner>Processing...</Spinner>

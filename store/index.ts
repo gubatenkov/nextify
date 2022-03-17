@@ -13,11 +13,11 @@ import storage from 'redux-persist/lib/storage'
 import { playlistsApi } from '../api/playlistsApi'
 import { modalsReducer, userReducer, playlistsReducer } from '../slices'
 
-// const persistConfig = {
-//   key: 'root',
-//   version: 1,
-//   storage,
-// }
+const persistConfig = {
+  key: 'root',
+  version: 1,
+  storage,
+}
 
 const rootReducer = combineReducers({
   [playlistsApi.reducerPath]: playlistsApi.reducer,
@@ -25,22 +25,17 @@ const rootReducer = combineReducers({
   playlists: playlistsReducer,
   modals: modalsReducer,
 })
-// const persistedReducer = persistReducer(persistConfig, rootReducer)
+const persistedReducer = persistReducer(persistConfig, rootReducer)
 
 const store = configureStore({
-  reducer: {
-    [playlistsApi.reducerPath]: playlistsApi.reducer,
-    user: userReducer,
-    playlists: playlistsReducer,
-    modals: modalsReducer,
-  },
-  // middleware: (getDefaultMiddleware) =>
-  //   getDefaultMiddleware({
-  //     serializableCheck: {
-  //       ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
-  //     },
-  //   }),
+  reducer: persistedReducer,
+  middleware: (getDefaultMiddleware) =>
+    getDefaultMiddleware({
+      serializableCheck: {
+        ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
+      },
+    }),
 })
 
-// export let persistor = persistStore(store)
+export let persistor = persistStore(store)
 export default store
