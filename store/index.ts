@@ -17,6 +17,7 @@ const persistConfig = {
   key: 'root',
   version: 1,
   storage,
+  blacklist: [playlistsApi.reducerPath],
 }
 
 const rootReducer = combineReducers({
@@ -34,7 +35,7 @@ const store = configureStore({
       serializableCheck: {
         ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
       },
-    }),
+    }).concat(playlistsApi.middleware),
 })
 
 export let persistor = persistStore(store)

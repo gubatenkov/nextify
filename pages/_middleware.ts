@@ -1,29 +1,31 @@
 import { getToken } from 'next-auth/jwt'
 import { NextResponse } from 'next/server'
-import type { NextApiRequest, NextApiResponse } from 'next'
+import type { NextRequest } from 'next/server'
+import { NextApiRequest } from 'next/types'
+import { NextMiddlewareResult } from 'next/dist/server/web/types'
 
-// interface Request extends NextApiRequest {
-//   nextUrl: any
-// }
-
-export default async function checkAuthTokenMiddleware(req: Request) {
+const checkAuthTokenMiddleware = async (
+  req: NextRequest & NextApiRequest
+): Promise<NextMiddlewareResult> => {
   const secret = process.env.JWT_SECRET || ''
   // if token exist in request, user is logged in
-  // const token = await getToken({ req, secret })
-  // const userWantAuth = req.nextUrl.pathname.includes('/api/auth')
+  const token = await getToken({ req, secret })
+  const userWantAuth = req.nextUrl.pathname.includes('/api/auth')
 
   // allow requests if the following true
   // 1) User want to log in
   // 2) User already logged in / has token
 
-  // if (token || userWantAuth) {
-  //   return NextResponse.next()
-  // }
+  if (token || userWantAuth) {
+    return NextResponse.next()
+  }
 
   // otherwise redirect user to default page if NO token AND...
   // ... user want to access protected route
 
-  // if (!token && req.nextUrl.pathname !== '/login') {
-  //   return NextResponse.redirect(new URL('/login', req.nextUrl))
-  // }
+  if (!token && req.nextUrl.pathname !== '/login') {
+    return NextResponse.redirect(new URL('/login', req.nextUrl))
+  }
 }
+
+export default checkAuthTokenMiddleware
