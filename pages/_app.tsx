@@ -5,8 +5,7 @@ import { PersistGate } from 'redux-persist/integration/react'
 
 import '../styles/globals.css'
 
-import store from '../store'
-import { persistor } from '../store'
+import store, { persistor } from '../store'
 
 function MyApp({ Component, pageProps: { session, ...pageProps } }: AppProps) {
   return (
