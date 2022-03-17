@@ -20,7 +20,7 @@ interface ILoginProps {
 }
 
 const Login: NextPage<ILoginProps> = ({ providers }) => {
-  const { data: session, status } = useSession()
+  const session = useSession()
   const [isUserLoading, setUserLoading] = useState(false)
 
   const handleClick = (providerId: string) => {
@@ -29,8 +29,8 @@ const Login: NextPage<ILoginProps> = ({ providers }) => {
   }
 
   useEffect(() => {
-    status === 'loading' ? setUserLoading(true) : setUserLoading(false)
-  }, [status])
+    session.status === 'loading' ? setUserLoading(true) : setUserLoading(false)
+  }, [session])
 
   return (
     <div className="login flex h-screen flex-col items-center justify-center bg-black">
