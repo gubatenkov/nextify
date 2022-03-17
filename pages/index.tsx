@@ -7,7 +7,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { setUser } from '../slices/userSlice'
 import { setPlaylists } from '../slices/playlistsSlice'
 import { Sidebar, SongList, Topbar } from '../components'
-import { useLazyGetAllPlaylistsQuery } from '../api/playlistsApi'
+import { useLazyGetAllPlaylistsQuery } from '../queries/playlistsApi'
 import { TRootState, TAppDispatch } from '../interfacesAndTypes'
 
 const colors = [

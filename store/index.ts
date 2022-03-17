@@ -10,7 +10,7 @@ import {
   REGISTER,
 } from 'redux-persist'
 import storage from 'redux-persist/lib/storage'
-import { playlistsApi } from '../api/playlistsApi'
+import { playlistsApi } from '../queries/playlistsApi'
 import { modalsReducer, userReducer, playlistsReducer } from '../slices'
 
 const persistConfig = {
