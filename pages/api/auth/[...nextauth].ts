@@ -1,13 +1,21 @@
 import NextAuth from 'next-auth'
+import { JWT } from 'next-auth/jwt'
+import { OAuthUserConfig } from 'next-auth/providers'
 import DefaultProvider from 'next-auth/providers/spotify'
 import { LOGIN_URL, spotApi } from '../../../services/spotify'
 
-const providerData = {
-  clientId: process.env.NEXT_PUBLIC_CLIENT_ID,
-  clientSecret: process.env.NEXT_PUBLIC_CLIENT_SECRET,
-  authorization: LOGIN_URL,
+interface IProviderConfig {
+  clientId: string
+  clientSecret: string
+  authorization: string
 }
-const refreshAccessToken = async (token) => {
+
+const providerData: OAuthUserConfig<IProviderConfig> = {
+  clientId: process.env.NEXT_PUBLIC_CLIENT_ID as string,
+  clientSecret: process.env.NEXT_PUBLIC_CLIENT_SECRET as string,
+  authorization: LOGIN_URL as string,
+}
+const refreshAccessToken = async (token: JWT) => {
   try {
     spotApi.setAccessToken(token.accessToken)
     spotApi.setRefreshToken(token.refreshToken)
@@ -47,12 +55,12 @@ export default NextAuth({
           accessToken: account.access_token,
           refreshToken: account.refresh_token,
           username: account.providerAccountId,
-          accessTokenExpires: Date.now() + account.expires_in * 1000,
+          accessTokenExpires: Date.now() + Number(account.expires_in) * 1000,
         }
       }
 
       // return pervious token if the token has not expired yet
-      if (Date.now() < token.accessTokenExpires) {
+      if (Date.now() < Number(token.accessTokenExpires)) {
         return token
       }
 
@@ -60,9 +68,9 @@ export default NextAuth({
       return await refreshAccessToken(token)
     },
     async session({ session, token }) {
-      session.user.accessToken = token.accessToken
-      session.accessToken = token.accessToken
-      session.error = token.error
+      session.user.accessToken = token.accessToken as string
+      session.accessToken = token.accessToken as string
+      session.error = token.error as string
 
       return session
     },

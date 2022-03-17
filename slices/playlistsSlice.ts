@@ -15,7 +15,7 @@ const slice = createSlice({
   initialState,
   reducers: {
     setPlaylists: (state: IState, { payload }: ISetPlaylistsAction) => payload,
-    clearPlaylists: (state: IState) => [],
+    clearPlaylists: () => [],
   },
 })
 

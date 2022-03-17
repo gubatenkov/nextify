@@ -1,11 +1,6 @@
 import { useRouter } from 'next/router'
 import { signOut } from 'next-auth/react'
-import { useDispatch } from 'react-redux'
 import React, { useEffect, RefObject } from 'react'
-
-import { clearUser } from '../../slices/userSlice'
-import { TAppDispatch } from '../../interfacesAndTypes'
-import { clearPlaylists } from '../../slices/playlistsSlice'
 
 export default function UserWidgetModal({
   closeModal,
@@ -14,7 +9,6 @@ export default function UserWidgetModal({
   closeModal: (value: React.SetStateAction<void>) => void
   openElRef: RefObject<HTMLButtonElement>
 }) {
-  const dispatch = useDispatch<TAppDispatch>()
   const router = useRouter()
   useEffect(() => {
     // define DOM mouse click listener
@@ -34,10 +28,6 @@ export default function UserWidgetModal({
     // end session and redirect user to auth page without reloading page
     const data = await signOut({ redirect: false, callbackUrl: '/login' })
     router.push(data.url)
-    // also clear global user
-    dispatch(clearUser())
-    // and clear user playlists
-    dispatch(clearPlaylists())
   }
 
   return (
