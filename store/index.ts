@@ -1,3 +1,4 @@
+import storage from 'redux-persist/lib/storage'
 import { configureStore, combineReducers } from '@reduxjs/toolkit'
 import {
   persistStore,
@@ -9,9 +10,15 @@ import {
   PURGE,
   REGISTER,
 } from 'redux-persist'
-import storage from 'redux-persist/lib/storage'
-import { playlistsApi } from '../queries/playlistsApi'
-import { modalsReducer, userReducer, playlistsReducer } from '../slices'
+
+import {
+  modalsReducer,
+  userReducer,
+  playlistsReducer,
+  currentPlaylistSlice,
+} from '../slices'
+import { trackApi } from '../api/trackApi'
+import { playlistsApi } from '../api/playlistsApi'
 
 const persistConfig = {
   key: 'root',
@@ -22,8 +29,10 @@ const persistConfig = {
 
 const rootReducer = combineReducers({
   [playlistsApi.reducerPath]: playlistsApi.reducer,
+  [trackApi.reducerPath]: trackApi.reducer,
   user: userReducer,
   playlists: playlistsReducer,
+  current: currentPlaylistSlice,
   modals: modalsReducer,
 })
 const persistedReducer = persistReducer(persistConfig, rootReducer)
@@ -35,7 +44,7 @@ const store = configureStore({
       serializableCheck: {
         ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
       },
-    }).concat(playlistsApi.middleware),
+    }).concat(playlistsApi.middleware, trackApi.middleware),
 })
 
 export let persistor = persistStore(store)

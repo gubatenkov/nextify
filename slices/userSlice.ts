@@ -2,7 +2,7 @@ import { createSlice } from '@reduxjs/toolkit'
 
 import { IUser } from '../interfacesAndTypes'
 
-type IState = null | IUser
+type IState = IUser | null
 
 const initialState: IState = null
 
@@ -10,8 +10,8 @@ const slice = createSlice({
   name: 'user',
   initialState,
   reducers: {
-    setUser: (state, { payload }) => payload,
-    clearUser: () => null,
+    setUser: (state: IState, { payload }) => payload,
+    clearUser: (state: IState) => null,
   },
 })
 

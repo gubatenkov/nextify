@@ -13,16 +13,16 @@ import {
 } from '../../interfacesAndTypes'
 import UserWidgetModal from './UserWidgetModal'
 
-export default function UserWidget({ name, image, email }: IUserWidgetProps) {
+export default function UserWidget({ name, image }: IUserWidgetProps) {
   const ref = useRef<HTMLButtonElement>(null)
   const dispatch = useDispatch<TAppDispatch>()
   const userWidgetModal = useSelector<TRootState, boolean>(
     ({ modals }) => modals.userWidgetModal
   )
-  const openModal = (): void => dispatch(openUserWidgetModal())
-  const closeModal = (): void => dispatch(closeUserWidgetModal())
+  const openModal = () => dispatch(openUserWidgetModal())
+  const closeModal = () => dispatch(closeUserWidgetModal())
 
-  const handleClick = (): void => (userWidgetModal ? closeModal() : openModal())
+  const handleClick = () => (userWidgetModal ? closeModal() : openModal())
 
   return (
     <div className="user-widget relative ml-auto w-fit">

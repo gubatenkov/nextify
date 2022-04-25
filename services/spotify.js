@@ -1,7 +1,7 @@
 import api from 'spotify-web-api-node'
 
 const scope = [
-  'user-read-email',
+  // 'user-read-email',
   'playlist-read-private',
   'playlist-read-collaborative',
   'streaming',
@@ -12,7 +12,7 @@ const scope = [
   'user-modify-playback-state',
   'user-read-currently-playing',
   'user-read-recently-played',
-  'user-follow-read',
+  // 'user-follow-read',
 ].join(',')
 
 const params = {
