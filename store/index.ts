@@ -17,8 +17,8 @@ import {
   playlistsReducer,
   currentPlaylistSlice,
 } from '../slices'
-import { trackApi } from '../api/trackApi'
-import { playlistsApi } from '../api/playlistsApi'
+import { trackApi } from '../palylistAPI/trackApi'
+import { playlistsApi } from '../palylistAPI/playlistsApi'
 
 const persistConfig = {
   key: 'root',

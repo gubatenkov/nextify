@@ -6,14 +6,14 @@ import { getSession, GetSessionParams, useSession } from 'next-auth/react'
 
 import { setUser } from '../slices/userSlice'
 import { setPlaylists } from '../slices/playlistsSlice'
-import { useLazyGetAllPlaylistsQuery } from '../api/playlistsApi'
+import { useLazyGetAllPlaylistsQuery } from '../palylistAPI/playlistsApi'
 import { Sidebar, PageContent, Topbar, Player } from '../components'
 import {
   setCurrentPlaylist,
   setCurrentTrack,
 } from '../slices/currentPlaylistSlice'
+import { useLazyGetPlayingTrackQuery } from '../palylistAPI/trackApi'
 import { TRootState, TAppDispatch, IPlaylist } from '../interfacesAndTypes'
-import { useLazyGetPlayingTrackQuery } from '../api/trackApi'
 
 const colors = [
   'from-indigo',
@@ -33,6 +33,7 @@ const Home: NextPage = () => {
   const [trigger, { data, isSuccess, isUninitialized }, lastPromiseInfo] =
     useLazyGetAllPlaylistsQuery()
   const [getPlayingTrack, getPlayingTrackResult] = useLazyGetPlayingTrackQuery()
+
   const randomBgColor = useMemo(
     () => colors[Math.floor(Math.random() * colors.length)],
     [colors.length, currentPlaylistId]
@@ -57,6 +58,7 @@ const Home: NextPage = () => {
       const playlists = data as IPlaylist[]
       dispatch(setPlaylists(playlists))
       dispatch(setCurrentPlaylist(playlists[0]))
+      // dispatch(setCurrentTrack())
     }
     // if current playing track was fetched set it to the global state
     if (getPlayingTrackResult.isSuccess && getPlayingTrackResult.data) {

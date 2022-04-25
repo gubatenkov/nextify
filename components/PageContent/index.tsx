@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { Playlist } from '../'
 import PlaylistInfo from '../PlaylistInfo'
 import useGetPlaylistTracks from '../../utils/useGetPlaylistTracks'
-import { useLazyGetPlaylistByIdQuery } from '../../api/playlistsApi'
+import { useLazyGetPlaylistByIdQuery } from '../../palylistAPI/playlistsApi'
 import { setCurrentPlaylist } from '../../slices/currentPlaylistSlice'
 import { IPlaylist, TAppDispatch, TRootState } from '../../interfacesAndTypes'
 
